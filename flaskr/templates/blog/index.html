@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    {% block title %}Posts{% endblock %}
+{% endblock %}
+
+{% block content %}
+    {% for post in posts %}
+        <article class="post">
+            <header>
+                <div>
+                    <h1>{{ post['title'] }}</h1>
+                    <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+                </div>
+                {% if g.user['id'] == post['author_id'] %}
+                    <a class="action" href="{{ url_for('blog.update', post_id=post['id']) }}">Edit</a>
+                    <a class="action" href="{{ url_for('blog.delete', post_id=post['id']) }}">Delete</a>
+                {% endif %}
+            </header>
+            
+        </article>
+    {% endfor %}
+{% endblock %}
